@@ -22,17 +22,22 @@ namespace AES
             for (i = 0; i < files.Length; i++)
             {
                 Console.WriteLine(files[i]);
+
+                using (System.IO.FileStream in_stream = new FileStream(files[i], FileMode.Open, FileAccess.Read))
+                using (System.IO.FileStream out_stream = new FileStream(files[i] + ".aes", FileMode.Append, FileAccess.Write))
+                {
+                    byte[] bs = new byte[0x1000];
+                    for(;;)
+                    {
+                        int readSize = in_stream.Read(bs, 0, bs.Length);
+                        if (readSize == 0)
+                            break;
+
+                        //byte型の配列の中身をstringに変えて暗号化する
+
+                    }
+                }
             }
-
-            try
-            {
-
-            }
-            catch
-            {
-
-            }
-
         }
 
         static void Create_Key(out string iv, out string key)
