@@ -24,7 +24,7 @@ namespace AES
                 Console.WriteLine(files[i]);
 
                 using (System.IO.FileStream in_stream = new FileStream(files[i], FileMode.Open, FileAccess.Read))
-                using (System.IO.FileStream out_stream = new FileStream(files[i] + ".aes", FileMode.Append, FileAccess.Write))
+                using (System.IO.FileStream out_stream = new FileStream(files[i] + ".aes", FileMode.Create, FileAccess.Write))
                 {
                     byte[] bs = new byte[0x1000];
                     for(;;)
@@ -34,6 +34,12 @@ namespace AES
                             break;
 
                         //byte型の配列の中身をstringに変えて暗号化する
+                        string text = System.Text.Encoding.ASCII.GetString(bs);
+                        Encrypt(text, iv, key);
+
+                        bs = Encoding.ASCII.GetBytes(text);
+
+                        out_stream.Write(bs, 0, bs.Length);
 
                     }
                 }
